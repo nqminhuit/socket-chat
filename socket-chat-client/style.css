@@ -1,3 +1,7 @@
 .msg-show {
   height: 40em;
 }
+
+.no-resize {
+  resize: none;
+}
