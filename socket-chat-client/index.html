@@ -26,14 +26,16 @@
       crossorigin="anonymous"
     ></script>
     <link rel="stylesheet" href="./style.css" />
+    <script async src="./scripts/app.js"></script>
   </head>
   <body>
     <div class="container">
       <div class="input-group msg-show">
-        <textarea class="form-control" aria-label="With textarea" disabled></textarea>
+        <textarea id="msgArea" class="form-control" aria-label="With textarea" disabled></textarea>
       </div>
       <div class="input-group mb-3">
         <input
+          id="msgToSend"
           type="text"
           class="form-control"
           placeholder="message"
