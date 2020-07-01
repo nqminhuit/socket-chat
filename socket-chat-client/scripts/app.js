@@ -8,6 +8,9 @@ function sendMessage() {
   if (message.length === 0) {
     return;
   }
+  if (webSocket.readyState !== WebSocket.OPEN) {
+    console.error(`WebSocket is not open, readyState is ${webSocket.readyState}`);
+  }
   webSocket.send(message);
   msgArea.value += message + String.fromCharCode(13, 10);
   msgToSend.value = "";
@@ -29,7 +32,7 @@ webSocket.onclose = () => {
 };
 
 webSocket.onmessage = event => {
-  console.log(`message sent: ${event.data}`);
+  console.log(`message: ${event.data}`);
 };
 
 webSocket.onerror = error => {
