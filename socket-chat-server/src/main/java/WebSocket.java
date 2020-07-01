@@ -95,8 +95,8 @@ public class WebSocket {
                 if (in.available() == 1) {
                     dataFrameList.add(in.read());
                     byte[] dataFrame = convertToByteArray(dataFrameList);
-                    // out.write(dataFrame);
-                    System.out.println("message = " + decodeMessage(dataFrame));
+                    out.write(decodeMessage(dataFrame).getBytes(DEFAULT_CHARSET));
+                    // System.out.println("message = " + decodeMessage(dataFrame));
                 }
             }
             else {
