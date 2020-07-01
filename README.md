@@ -14,7 +14,7 @@ $ mkdir -p build/classes
 compile and start server:
 
 ```bash
-$ rm -rf socket-chat-server/build/classes/*; javac socket-chat-server/src/main/java/WebSocket.java -d socket-chat-server/build/classes/; java -cp socket-chat-server/build/classes/ WebSocket
+$ rm -rf socket-chat-server/build/classes/*; javac socket-chat-server/src/main/java/*.java -d socket-chat-server/build/classes/; java -cp socket-chat-server/build/classes/ WebSocketApp
 ```
 
 references:
@@ -24,3 +24,6 @@ references:
 - https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_client_applications
 - https://www.codejava.net/java-se/networking/java-socket-server-examples-tcp-ip
 - https://javascript.info/websocket
+
+note:
+reason when closing (on server-side) java.util.Scanner, web socket on client also close: "the server is capable of exchanging messages with the client endlessly until the socket is closed with its streams."

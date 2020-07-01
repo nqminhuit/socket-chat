@@ -1,10 +1,15 @@
 const sendButton = document.querySelector("#btnSendMsg");
 const msgArea = document.querySelector("#msgArea");
 const msgToSend = document.querySelector("#msgToSend");
-const webSocket = new WebSocket("wss://127.0.0.1:80");
+const webSocket = new WebSocket("ws://127.0.0.1:8080");
 
 function sendMessage() {
-  msgArea.value += msgToSend.value + String.fromCharCode(13, 10);
+  const message = msgToSend.value.trim();
+  if (message.length === 0) {
+    return;
+  }
+  webSocket.send(message);
+  msgArea.value += message + String.fromCharCode(13, 10);
   msgToSend.value = "";
 }
 
@@ -15,7 +20,18 @@ msgToSend.addEventListener("keypress", event => {
   }
 });
 
-webSocket.onopen = function (event) {
-  console.log(`opened! event = ${event}`);
-  webSocket.send("Hello server!");
+webSocket.onopen = () => {
+  console.log("opened!");
+};
+
+webSocket.onclose = () => {
+  console.log("closed!");
+};
+
+webSocket.onmessage = event => {
+  console.log(`message sent: ${event.data}`);
+};
+
+webSocket.onerror = error => {
+  console.log(`error: ${error.message}`);
 };
