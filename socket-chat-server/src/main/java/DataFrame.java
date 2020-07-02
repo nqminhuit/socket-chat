@@ -4,14 +4,16 @@ public class DataFrame {
 
     private static final byte WHOLE_TEXT_MESSAGE_BYTE = (byte) 129;
 
+    private static final int MAXIMUM_TEXT_LEN = 126;
+
     private String message;
 
     private int messageLen;
 
     public DataFrame(String message) throws IOException {
         int len = message.length();
-        if (len > 127) {
-            throw new IOException("only accept message with length <= 127");
+        if (len > MAXIMUM_TEXT_LEN) {
+            throw new IOException("only accept message with length <= " + MAXIMUM_TEXT_LEN);
         }
         this.message = message;
         this.messageLen = len;
