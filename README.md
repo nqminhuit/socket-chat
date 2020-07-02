@@ -5,6 +5,7 @@ $ cd socket-chat-client; browser-sync start --server --files **/*.html,**/*.css,
 ```
 
 Spin up the server:
+
 precondition:
 
 ```bash
