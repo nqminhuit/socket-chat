@@ -1,7 +1,7 @@
 const sendButton = document.querySelector("#btnSendMsg");
 const msgArea = document.querySelector("#msgArea");
 const msgToSend = document.querySelector("#msgToSend");
-const webSocket = new WebSocket("ws://127.0.0.1:8080");
+let webSocket = new WebSocket("ws://127.0.0.1:8080");
 
 function sendMessage() {
   const message = msgToSend.value.trim();
@@ -12,7 +12,6 @@ function sendMessage() {
     console.error(`WebSocket is not open, readyState is ${webSocket.readyState}`);
   }
   webSocket.send(message);
-  msgArea.value += message + String.fromCharCode(13, 10);
   msgToSend.value = "";
 }
 
@@ -32,7 +31,7 @@ webSocket.onclose = () => {
 };
 
 webSocket.onmessage = event => {
-  console.log(`message: ${event.data}`);
+  msgArea.value += "your message: " + event.data + String.fromCharCode(13, 10);
 };
 
 webSocket.onerror = error => {

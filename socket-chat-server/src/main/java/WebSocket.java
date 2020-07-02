@@ -61,7 +61,7 @@ public class WebSocket {
         Matcher get = Pattern.compile("^GET").matcher(data);
         if (get.find()) {
             byte[] response = buildResponseHandshake(data);
-            out.write(response, 0, response.length);
+            out.write(response);
             System.out.println("\r\n>>> server response: " + new String(response, DEFAULT_CHARSET));
         }
     }
@@ -83,20 +83,18 @@ public class WebSocket {
             + encode(match.group(1)) + "\r\n\r\n").getBytes(DEFAULT_CHARSET);
     }
 
-    private void communicate(InputStream in, OutputStream out) throws IOException {
+    private void communicate(InputStream in, OutputStream out) throws IOException, NoSuchAlgorithmException {
         System.out.print("- communicate: ");
         List<Integer> dataFrameList = new ArrayList<>();
         while (true) {
             if (in.available() > 0) {
                 int read = in.read();
                 dataFrameList.add(read);
-                System.out.print(read + " ");
 
                 if (in.available() == 1) {
                     dataFrameList.add(in.read());
-                    byte[] dataFrame = convertToByteArray(dataFrameList);
-                    out.write(decodeMessage(dataFrame).getBytes(DEFAULT_CHARSET));
-                    // System.out.println("message = " + decodeMessage(dataFrame));
+                    DataFrame dataFrame = new DataFrame(decodeMessage(convertToByteArray(dataFrameList)));
+                    out.write(dataFrame.encodeDataFrame());
                 }
             }
             else {
