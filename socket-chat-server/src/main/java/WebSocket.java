@@ -1,3 +1,4 @@
+import static java.lang.System.out;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -36,33 +37,33 @@ public class WebSocket {
         server = new ServerSocket(this.port);
 
         try {
-            System.out.println(
+            out.println(
                 ">>> Server has started on 127.0.0.1:" + this.port + ", waiting for a connection...");
             while (true) {
                 Socket client = server.accept();
-                System.out.println("<<< A client connected");
-                InputStream in = client.getInputStream();
-                OutputStream out = client.getOutputStream();
-                Scanner scan = new Scanner(in, DEFAULT_CHARSET);
-                performHandshake(scan, out);
-                communicate(in, out);
+                out.println("<<< A client connected");
+                InputStream inputStream = client.getInputStream();
+                OutputStream outputStream = client.getOutputStream();
+                Scanner scanner = new Scanner(inputStream, DEFAULT_CHARSET);
+                performHandshake(scanner, outputStream);
+                communicate(inputStream, outputStream);
             }
         }
         catch (Exception e) {
-            System.out.println("Exception: " + e.getMessage());
+            out.println("Exception: " + e.getMessage());
         }
     }
 
-    private void performHandshake(Scanner scan, OutputStream out)
+    private void performHandshake(Scanner scan, OutputStream outputStream)
         throws NoSuchAlgorithmException, IOException {
 
         String data = scan.useDelimiter(REQUEST_DELIMITER).next();
-        System.out.println("<<< data = " + data);
+        out.println("<<< Received request:\n" + data + "<<<");
         Matcher get = Pattern.compile("^GET").matcher(data);
         if (get.find()) {
             byte[] response = buildResponseHandshake(data);
-            out.write(response);
-            System.out.println("\r\n>>> server response: " + new String(response, DEFAULT_CHARSET));
+            outputStream.write(response);
+            out.println("\r\n>>> server responsed:\n" + new String(response, DEFAULT_CHARSET) + ">>>\n");
         }
     }
 
@@ -75,26 +76,29 @@ public class WebSocket {
         throws UnsupportedEncodingException, NoSuchAlgorithmException {
 
         Matcher match = Pattern.compile("Sec-WebSocket-Key: (.*)").matcher(data);
-        match.find(); ///////////////////// ?
-        return ("HTTP/1.1 101 Switching Protocols\r\n"
-            + "Connection: Upgrade\r\n"
-            + "Upgrade: websocket\r\n"
-            + "Sec-WebSocket-Accept: "
-            + encode(match.group(1)) + "\r\n\r\n").getBytes(DEFAULT_CHARSET);
+        return match.find()
+            ? ("HTTP/1.1 101 Switching Protocols\r\n"
+                + "Connection: Upgrade\r\n"
+                + "Upgrade: websocket\r\n"
+                + "Sec-WebSocket-Accept: "
+                + encode(match.group(1)) + "\r\n\r\n").getBytes(DEFAULT_CHARSET)
+            : new byte[0];
     }
 
-    private void communicate(InputStream in, OutputStream out) throws IOException, NoSuchAlgorithmException {
-        System.out.print("- communicate: ");
+    private void communicate(InputStream inputStream, OutputStream outputStream)
+        throws IOException, NoSuchAlgorithmException {
+
+        out.println("communication has started!");
         List<Integer> dataFrameList = new ArrayList<>();
         while (true) {
-            if (in.available() > 0) {
-                int read = in.read();
+            if (inputStream.available() > 0) {
+                int read = inputStream.read();
                 dataFrameList.add(read);
 
-                if (in.available() == 1) {
-                    dataFrameList.add(in.read());
+                if (inputStream.available() == 1) {
+                    dataFrameList.add(inputStream.read());
                     DataFrame dataFrame = new DataFrame(decodeMessage(convertToByteArray(dataFrameList)));
-                    out.write(dataFrame.encodeDataFrame());
+                    outputStream.write(dataFrame.encodeDataFrame());
                 }
             }
             else {
