@@ -1,3 +1,5 @@
+package websocket;
+
 import static java.lang.System.out;
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,10 +28,10 @@ public class ClientThread implements Runnable {
 
     private Socket socket;
 
-    private String id;
+    // private String id;
 
     public ClientThread(String id, Socket socket) {
-        this.id = id;
+        // this.id = id;
         this.socket = socket;
     }
 

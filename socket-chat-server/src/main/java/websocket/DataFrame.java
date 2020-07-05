@@ -1,3 +1,5 @@
+package websocket;
+
 import java.io.IOException;
 
 public class DataFrame {

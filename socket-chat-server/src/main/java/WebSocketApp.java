@@ -1,4 +1,5 @@
 import java.io.IOException;
+import websocket.WebSocket;
 
 public class WebSocketApp {
 
