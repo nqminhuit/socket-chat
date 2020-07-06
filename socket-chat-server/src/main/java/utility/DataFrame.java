@@ -1,12 +1,10 @@
-package observer;
+package utility;
 
+import static utility.WebSocketConstants.MAXIMUM_TEXT_LEN;
+import static utility.WebSocketConstants.WHOLE_TEXT_MESSAGE_BYTE;
 import java.io.IOException;
 
 public class DataFrame {
-
-    private static final byte WHOLE_TEXT_MESSAGE_BYTE = (byte) 129;
-
-    private static final int MAXIMUM_TEXT_LEN = 126;
 
     private String message;
 
