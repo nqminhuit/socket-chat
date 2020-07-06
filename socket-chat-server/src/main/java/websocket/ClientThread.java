@@ -9,12 +9,13 @@ import java.net.Socket;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import observer.OutputStreamObserver;
+import observer.OutputStreamSubject;
 
 public class ClientThread implements Runnable {
 
@@ -28,19 +29,35 @@ public class ClientThread implements Runnable {
 
     private Socket socket;
 
+    private InputStream inputStream;
+
+    private OutputStream outputStream;
+
+    private OutputStreamSubject osSubject;
+
     // private String id;
 
     public ClientThread(String id, Socket socket) {
         // this.id = id;
         this.socket = socket;
+        try {
+            inputStream = socket.getInputStream();
+            outputStream = socket.getOutputStream();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        osSubject = new OutputStreamSubject();
+    }
+
+    public OutputStream getOutputStream() {
+        return this.outputStream;
     }
 
     @Override
     public void run() {
         out.println("<<< A client connected, id: " + this.toString());
         try {
-            InputStream inputStream = socket.getInputStream();
-            OutputStream outputStream = socket.getOutputStream();
             Scanner scanner = new Scanner(inputStream, DEFAULT_CHARSET);
             performHandshake(scanner, outputStream);
             communicate(inputStream, outputStream);
@@ -93,8 +110,9 @@ public class ClientThread implements Runnable {
 
                 if (inputStream.available() == 1) {
                     dataFrameList.add(inputStream.read());
-                    DataFrame dataFrame = new DataFrame(decodeMessage(convertToByteArray(dataFrameList)));
-                    outputStream.write(dataFrame.encodeDataFrame());
+                    osSubject.informObservers(dataFrameList);
+                    // DataFrame dataFrame = new DataFrame(decodeMessage(convertToByteArray(dataFrameList)));
+                    // outputStream.write(dataFrame.encodeDataFrame());
                 }
             }
             else {
@@ -103,26 +121,32 @@ public class ClientThread implements Runnable {
         }
     }
 
-    private byte[] convertToByteArray(List<Integer> source) {
-        int size = source.size();
-        byte[] result = new byte[size];
-        for (int i = 0; i < size; ++i) {
-            result[i] = source.get(i).byteValue();
-        }
-        return result;
-    }
+    // private byte[] convertToByteArray(List<Integer> source) {
+    //     int size = source.size();
+    //     byte[] result = new byte[size];
+    //     for (int i = 0; i < size; ++i) {
+    //         result[i] = source.get(i).byteValue();
+    //     }
+    //     return result;
+    // }
 
-    private String decodeMessage(byte[] dataFrame) throws UnsupportedEncodingException {
-        int frameLength = dataFrame.length;
-        byte[] decodedMsg = new byte[frameLength - 6];
-        byte[] encodedMsg = Arrays.copyOfRange(dataFrame, 6, frameLength);
-        byte[] key = Arrays.copyOfRange(dataFrame, 2, 6);
+    // private String decodeMessage(byte[] dataFrame) throws UnsupportedEncodingException {
+    //     int frameLength = dataFrame.length;
+    //     byte[] decodedMsg = new byte[frameLength - 6];
+    //     byte[] encodedMsg = Arrays.copyOfRange(dataFrame, 6, frameLength);
+    //     byte[] key = Arrays.copyOfRange(dataFrame, 2, 6);
 
-        for (int i = 0; i < encodedMsg.length; i++) {
-            decodedMsg[i] = (byte) (encodedMsg[i] ^ key[i & 0x3]);
-        }
+    //     for (int i = 0; i < encodedMsg.length; i++) {
+    //         decodedMsg[i] = (byte) (encodedMsg[i] ^ key[i & 0x3]);
+    //     }
 
-        return new String(decodedMsg, DEFAULT_CHARSET);
+    //     return new String(decodedMsg, DEFAULT_CHARSET);
+    // }
+
+    public void registerObservers(List<OutputStream> outputStreams) {
+        outputStreams.forEach(outputStream -> {
+            osSubject.registerObserver(new OutputStreamObserver(outputStream));
+        });
     }
 
 }

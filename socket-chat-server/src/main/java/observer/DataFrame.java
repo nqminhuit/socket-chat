@@ -1,4 +1,4 @@
-package websocket;
+package observer;
 
 import java.io.IOException;
 
