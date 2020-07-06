@@ -9,11 +9,12 @@ public class OutputStreamSubject implements Subject {
 
     private List<Observer> observers;
 
+    public OutputStreamSubject() {
+        this.observers = new ArrayList<>();
+    }
+
     @Override
     public void registerObserver(Observer observer) {
-        if (observers == null) {
-            observers = new ArrayList<>();
-        }
         if (containsObserver(observer.getId())) {
             return;
         }
