@@ -14,9 +14,28 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="./style.css" />
     <script async src="./scripts/app.js"></script>
+    <script async src="./scripts/login.js"></script>
   </head>
   <body>
-    <div class="container">
+    <div id="loginForm" class="container bordered">
+      <div class="login-form">
+        <input id="usernameInput" class="form-control margin-bot-10px" type="text" placeholder="Username"></input>
+        <input id="passwordInput" class="form-control margin-bot-10px" type="password" placeholder="Password"></input>
+        <hr>
+        <div class="form-row">
+          <div class="col-8">
+            <input id="serverAddress" class="form-control margin-bot-10px" type="text" placeholder="Server IP Address"></input>
+          </div>
+          <div class="col-4">
+            <input id="serverPort" class="form-control margin-bot-10px" type="text" placeholder="Server Port"></input>
+          </div>
+        </div>
+
+        <button id="btnLogin" type="button" class="btn btn-primary">Login</button>
+     </div>
+    </div>
+
+    <div id="chatbox" class="container">
       <div class="input-group msg-show">
         <textarea
           id="msgArea"

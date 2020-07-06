@@ -13,3 +13,17 @@
 .no-resize {
   resize: none;
 }
+
+.margin-bot-10px {
+  margin-bottom: 10px;
+}
+
+#chatbox {
+  display: none;
+}
+
+.bordered {
+  border: 1px solid #2d98da;
+  padding: 1em;
+  border-radius: 0.5em;
+}
