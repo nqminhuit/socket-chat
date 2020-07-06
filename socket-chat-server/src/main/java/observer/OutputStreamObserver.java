@@ -10,10 +10,18 @@ public class OutputStreamObserver implements Observer {
 
     private static final String DEFAULT_CHARSET = "UTF-8";
 
+    private String id;
+
     private OutputStream outputStream;
 
-    public OutputStreamObserver(OutputStream outputStream) {
+    public OutputStreamObserver(String id, OutputStream outputStream) {
+        this.id = id;
         this.outputStream = outputStream;
+    }
+
+    @Override
+    public String getId() {
+        return this.id;
     }
 
     @Override

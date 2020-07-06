@@ -6,7 +6,7 @@ public interface Subject {
 
     void registerObserver(Observer observer);
 
-    void unregisterObserver(Observer observer);
+    void unregisterObserver(String id);
 
     void informObservers(List<Integer> dataFrameList);
 }

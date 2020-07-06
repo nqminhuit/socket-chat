@@ -14,13 +14,13 @@ public class WebSocket {
 
     private ServerSocket server;
 
-    // private OutputStreamSubject osSubject;
-
     private List<OutputStream> outputStreams;
+
+    private List<ClientThread> clientThreads;
 
     public WebSocket(int port) {
         this.port = port;
-        // osSubject = new OutputStreamSubject();
+        clientThreads = new ArrayList<>();
         outputStreams = new ArrayList<>();
     }
 
@@ -32,17 +32,20 @@ public class WebSocket {
                 ">>> Server has started on 127.0.0.1:" + this.port + ", waiting for a connection...");
             while (true) {
                 Socket client = server.accept();
+
                 ClientThread clientThread = new ClientThread("id", client);
                 outputStreams.add(clientThread.getOutputStream());
-                clientThread.registerObservers(outputStreams);
-                (new Thread(clientThread)).start();
-                // use a hash map to put clients in then broadcast the message to all clients in the map
+                clientThreads.add(clientThread);
+                for (int i = 0; i < clientThreads.size(); ++i) {
+                    clientThreads.get(i).registerObservers(outputStreams);
+                }
+
+                new Thread(clientThread).start();
             }
         }
         catch (Exception e) {
             out.println("Exception: " + e.getMessage());
         }
     }
-
 
 }
