@@ -1,3 +1,5 @@
+import { WebSocketHandler } from "../scripts/websocket-handler.js";
+
 window.customElements.define(
   "chat-box",
   class extends HTMLElement {
@@ -56,6 +58,7 @@ window.customElements.define(
       const shadow = this.attachShadow({ mode: "open" });
       shadow.appendChild(divChatboxContainer);
       shadow.appendChild(style);
+      this.webSocket = new WebSocketHandler("127.0.0.1", "8080", textArea);
     }
 
     sendMessage() {
@@ -63,10 +66,7 @@ window.customElements.define(
       if (message.length === 0) {
         return;
       }
-      // if (webSocket.readyState !== WebSocket.OPEN) {
-      //   console.error(`WebSocket is not open, readyState is ${webSocket.readyState}`);
-      // }
-      // webSocket.send(message);
+      this.webSocket.sendMessage(message);
       this.msgInput.value = "";
     }
   }
