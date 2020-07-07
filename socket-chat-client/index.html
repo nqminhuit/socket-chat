@@ -5,42 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Socket Chat Client</title>
     <link rel="icon" href="./chatbox-outline.svg" />
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-    />
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="./style.css" />
-    <script async src="./scripts/app.js"></script>
+    <link rel="stylesheet" href="./styles/style.css" />
     <script async src="./elements/login-form.js"></script>
+    <script async src="./elements/chat-box.js"></script>
   </head>
   <body>
     <login-form></login-form>
-
-    <div id="chatbox" class="container">
-      <div class="input-group msg-show">
-        <textarea
-          id="msgArea"
-          class="form-control no-resize"
-          aria-label="With textarea"
-          disabled
-        ></textarea>
-      </div>
-      <div class="input-group mb-3">
-        <input
-          id="msgToSend"
-          type="text"
-          class="form-control"
-          placeholder="message"
-          aria-label="message"
-          aria-describedby="button-addon2"
-        />
-        <div class="input-group-append">
-          <button class="btn btn-outline-secondary" type="button" id="btnSendMsg">Send</button>
-        </div>
-      </div>
-    </div>
+    <chat-box></chat-box>
   </body>
 </html>

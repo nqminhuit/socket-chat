@@ -24,10 +24,10 @@ window.customElements.define(
       btnLogin.classList.add("btn-primary");
       btnLogin.setAttribute("id", "btnLogin");
       btnLogin.innerHTML = "Login";
-      btnLogin.addEventListener("click", function () {
+      btnLogin.addEventListener("click", () => {
         const loginForm = document.querySelector("login-form");
         loginForm.remove();
-        const chatbox = document.querySelector("#chatbox");
+        const chatbox = document.querySelector("chat-box");
         chatbox.style.display = "block";
       });
 
@@ -44,9 +44,7 @@ window.customElements.define(
       divLoginFormContainer.classList.add("bordered");
 
       const style = document.createElement("style");
-      style.textContent =
-        "@import url('https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css');";
-      style.textContent += "@import url('./style.css')";
+      style.textContent = "@import url('./styles/login-form.css')";
 
       divLoginFormContainer.appendChild(divLoginInput);
       const shadow = this.attachShadow({ mode: "open" });

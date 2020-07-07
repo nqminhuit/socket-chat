@@ -1,0 +1,9 @@
+@import url("style.css");
+
+.msg-show {
+  height: 20em;
+}
+
+.no-resize {
+  resize: none;
+}

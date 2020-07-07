@@ -1,0 +1,11 @@
+@import url("style.css");
+
+.margin-bot-10px {
+  margin-bottom: 10px;
+}
+
+.bordered {
+  border: 1px solid #2d98da;
+  padding: 1em;
+  border-radius: 0.5em;
+}
