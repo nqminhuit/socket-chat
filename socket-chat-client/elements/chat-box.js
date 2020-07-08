@@ -31,7 +31,7 @@ export class ChatBox extends HTMLElement {
     btnSend.classList.add("btn");
     btnSend.classList.add("btn-outline-secondary");
     btnSend.innerHTML = "Send";
-    btnSend.addEventListener("click", this.sendMessage);
+    btnSend.addEventListener("click", this.sendMessage.bind(this));
     const divButtonAppend = document.createElement("div");
     divButtonAppend.classList.add("input-group-append");
     divButtonAppend.appendChild(btnSend);
