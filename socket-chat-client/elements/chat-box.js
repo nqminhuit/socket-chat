@@ -55,6 +55,7 @@ export class ChatBox extends HTMLElement {
     shadow.appendChild(divChatboxContainer);
     shadow.appendChild(style);
     this.webSocket = webSocketHandler;
+    this.webSocket.htmlElement = textArea;
   }
 
   sendMessage() {
@@ -64,6 +65,10 @@ export class ChatBox extends HTMLElement {
     }
     this.webSocket.sendMessage(message);
     this.msgInput.value = "";
+  }
+
+  connectedCallback() {
+    console.log("Chatbox connected!");
   }
 }
 

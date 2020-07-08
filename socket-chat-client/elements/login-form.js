@@ -1,3 +1,6 @@
+import { WebSocketHandler } from "../scripts/websocket-handler.js";
+import { ChatBox } from "./chat-box.js";
+
 window.customElements.define(
   "login-form",
   class extends HTMLElement {
@@ -26,9 +29,9 @@ window.customElements.define(
       btnLogin.innerHTML = "Login";
       btnLogin.addEventListener("click", () => {
         const loginForm = document.querySelector("login-form");
+        const chatBox = new ChatBox(new WebSocketHandler("127.0.0.1", "8080"));
+        loginForm.parentElement.appendChild(chatBox);
         loginForm.remove();
-        const chatbox = document.querySelector("chat-box");
-        chatbox.style.display = "block";
       });
 
       const divLoginInput = document.createElement("div");
