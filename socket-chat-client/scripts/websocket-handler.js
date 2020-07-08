@@ -1,12 +1,11 @@
 export class WebSocketHandler extends EventTarget {
-  constructor(ip, port) {
+  constructor(ip = "127.0.0.1", port = "8080") {
     super();
     this.webSocket = new WebSocket(`ws://${ip}:${port}`);
 
     this.webSocket.onmessage = event => {
       this.dispatchEvent(
         new CustomEvent("message-received", {
-          bubbles: true,
           detail: { message: event.data + String.fromCharCode(13, 10) },
         })
       );
