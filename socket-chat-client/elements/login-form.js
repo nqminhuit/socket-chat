@@ -28,13 +28,14 @@ window.customElements.define(
       btnLogin.setAttribute("id", "btnLogin");
       btnLogin.innerHTML = "Login";
       btnLogin.addEventListener("click", () => {
-        this.parentElement.appendChild(new ChatBox(new WebSocketHandler()));
+        this.parentElement.appendChild(new ChatBox(usernameInput.value, new WebSocketHandler()));
         this.remove();
       });
 
       const divLoginInput = document.createElement("div");
       divLoginInput.classList.add("login-form");
-      divLoginInput.appendChild(this.createInputText("input", "Username"));
+      const usernameInput = this.createInputText("input", "Username");
+      divLoginInput.appendChild(usernameInput);
       divLoginInput.appendChild(this.createInputText("password", "Password"));
       divLoginInput.appendChild(document.createElement("hr"));
       divLoginInput.appendChild(divServerInfo);

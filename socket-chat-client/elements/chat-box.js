@@ -1,5 +1,5 @@
 export class ChatBox extends HTMLElement {
-  constructor(webSocketHandler) {
+  constructor(username, webSocketHandler) {
     super();
 
     const textArea = document.createElement("textarea");
@@ -22,7 +22,7 @@ export class ChatBox extends HTMLElement {
     this.msgInput.classList.add("form-control");
     this.msgInput.addEventListener("keypress", event => {
       if (event.code === "Enter") {
-        this.sendMessage();
+        this.sendMessage(username);
       }
     });
 
@@ -31,7 +31,7 @@ export class ChatBox extends HTMLElement {
     btnSend.classList.add("btn");
     btnSend.classList.add("btn-outline-secondary");
     btnSend.innerHTML = "Send";
-    btnSend.addEventListener("click", this.sendMessage.bind(this));
+    btnSend.addEventListener("click", this.sendMessage.bind(this, username));
     const divButtonAppend = document.createElement("div");
     divButtonAppend.classList.add("input-group-append");
     divButtonAppend.appendChild(btnSend);
@@ -56,16 +56,16 @@ export class ChatBox extends HTMLElement {
     shadow.appendChild(style);
     this.webSocket = webSocketHandler;
     this.webSocket.addEventListener("message-received", event => {
-      textArea.value += "your message: " + event.detail.message;
+      textArea.value += event.detail.message;
     });
   }
 
-  sendMessage() {
+  sendMessage(username) {
     const message = this.msgInput.value.trim();
     if (message.length === 0) {
       return;
     }
-    this.webSocket.sendMessage(message);
+    this.webSocket.sendMessage(`${username}: ${message}`);
     this.msgInput.value = "";
   }
 
