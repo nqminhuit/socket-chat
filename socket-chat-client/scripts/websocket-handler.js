@@ -1,11 +1,15 @@
-export class WebSocketHandler {
-  constructor(ip, port, htmlElement) {
-    // TODO: decouple this htmlElement
+export class WebSocketHandler extends EventTarget {
+  constructor(ip, port) {
+    super();
     this.webSocket = new WebSocket(`ws://${ip}:${port}`);
-    this.htmlElement = htmlElement;
 
     this.webSocket.onmessage = event => {
-      this.htmlElement.value += "your message: " + event.data + String.fromCharCode(13, 10);
+      this.dispatchEvent(
+        new CustomEvent("message-received", {
+          bubbles: true,
+          detail: { message: event.data + String.fromCharCode(13, 10) },
+        })
+      );
     };
 
     this.webSocket.onopen = () => {

@@ -55,7 +55,9 @@ export class ChatBox extends HTMLElement {
     shadow.appendChild(divChatboxContainer);
     shadow.appendChild(style);
     this.webSocket = webSocketHandler;
-    this.webSocket.htmlElement = textArea;
+    this.webSocket.addEventListener("message-received", event => {
+      textArea.value += "your message: " + event.detail.message;
+    });
   }
 
   sendMessage() {
