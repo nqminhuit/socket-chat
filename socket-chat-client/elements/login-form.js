@@ -28,10 +28,8 @@ window.customElements.define(
       btnLogin.setAttribute("id", "btnLogin");
       btnLogin.innerHTML = "Login";
       btnLogin.addEventListener("click", () => {
-        const loginForm = document.querySelector("login-form");
-        const chatBox = new ChatBox(new WebSocketHandler("127.0.0.1", "8080"));
-        loginForm.parentElement.appendChild(chatBox);
-        loginForm.remove();
+        this.parentElement.appendChild(new ChatBox(new WebSocketHandler()));
+        this.remove();
       });
 
       const divLoginInput = document.createElement("div");
