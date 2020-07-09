@@ -1,6 +1,7 @@
 package observer;
 
 import java.io.IOException;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -29,14 +30,21 @@ public class OutputStreamSubject implements Subject {
 
     @Override
     public void informObservers(List<Integer> dataFrameList) {
+        List<String> brokenStreamIds = new ArrayList<>();
         observers.forEach(observer -> {
             try {
                 observer.inform(dataFrameList);
             }
             catch (IOException e) {
-                e.printStackTrace();
+                if (e instanceof SocketException && e.getMessage().equals("Broken pipe (Write failed)")) {
+                    brokenStreamIds.add(observer.getId());
+                }
+                else {
+                    e.printStackTrace();
+                }
             }
         });
+        brokenStreamIds.forEach(stream -> this.unregisterObserver(stream));
     }
 
     private boolean containsObserver(String id) {
