@@ -16,13 +16,6 @@ Execute browser-sync:
 cd socket-chat-client; browser-sync start --server --files **/*.html,**/*.css,**/*.js,**/*.json
 ```
 
-notes for deployment:
-
-- need to combines all javascript files into a single files. See the function `bundleJs()` and `minifyJs()` in `build-and-run-socket-chat.sh`
-- first, bundling, we concatenate all the javascript files into 1 single file `app.js` in `dist` directory.
-- next, we use sed commands to "transform" and "minify" javascript codes in `app.js`
-- this is just a simple progress to illustrate how javascript code is bundled and transformed for deployment, for larger project we should use tool like Webpack.
-
 ### Server setup
 
 Compile and start server:
