@@ -70,7 +70,6 @@ notes:
 
 There are some idea to upgrade this application:
 
-- [Webpack](https://github.com/webpack/webpack) for client code bundling
 - [Tailwind](https://github.com/tailwindcss/tailwindcss) for CSS framework
 - Use [Java API for WebSocket](https://docs.oracle.com/javaee/7/tutorial/websocket.htm)
 - Use ReactJs or Angular for the client
