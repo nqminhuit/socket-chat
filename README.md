@@ -13,12 +13,14 @@ $ bash build-and-run-socket-chat.sh
 Execute webpack-dev-server
 
 ```bash
+cd socket-chat-client
 node_modules/webpack-dev-server/bin/webpack-dev-server.js --content-base dist/ --inline --hot --watch-poll
 ```
 
 compile jsx:
 
 ```bash
+cd socket-chat-client
 node_modules/@babel/cli/bin/babel.js src/jsx/chat-box.jsx -o dist/chat-box.js --presets @babel/preset-react
 ```
 
