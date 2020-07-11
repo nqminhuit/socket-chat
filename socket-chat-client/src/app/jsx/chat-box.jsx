@@ -1,6 +1,7 @@
 import React from "react";
 import { render } from "react-dom";
 import "../../styles/chat-box.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 class ChatBox extends React.Component {
   render() {
