@@ -1,5 +1,4 @@
 import React from "react";
-import { render } from "react-dom";
 import "../../styles/login-form.css";
 import { Input } from "./input.jsx";
 
@@ -29,7 +28,6 @@ export class LoginForm extends React.Component {
       alert("Please provide username and password!");
       return;
     }
-    alert(`yo! ${this.state.username}/${this.state.password} !`);
   }
 
   render() {
@@ -48,8 +46,6 @@ export class LoginForm extends React.Component {
     );
   }
 }
-
-render(<LoginForm />, window.document.querySelector("#rx-login-form"));
 
 function ServerConnection() {
   return (

@@ -1,5 +1,4 @@
 import React from "react";
-import { render } from "react-dom";
 import "../../styles/chat-box.css";
 
 export class ChatBox extends React.Component {
@@ -21,5 +20,3 @@ export class ChatBox extends React.Component {
     );
   }
 }
-
-render(<ChatBox />, window.document.querySelector("#rx-chat-box"));
