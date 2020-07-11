@@ -26,8 +26,10 @@ export class LoginForm extends React.Component {
   login() {
     if (this.state.username.length === 0 || this.state.password.length === 0) {
       alert("Please provide username and password!");
+      this.props.handleLogin(false);
       return;
     }
+    this.props.handleLogin(true);
   }
 
   render() {
