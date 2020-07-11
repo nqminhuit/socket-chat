@@ -1,7 +1,8 @@
 import React from "react";
 import { render } from "react-dom";
+import "../../styles/chat-box.css";
 
-class App extends React.Component {
+class ChatBox extends React.Component {
   render() {
     return (
       <div id="chatbox" className="container">
@@ -10,10 +11,15 @@ class App extends React.Component {
         </div>
         <div className="input-group mb-3">
           <input id="msgToSend" type="text" placeholder="message" className="form-control" />
+          <div className="input-group-append">
+            <button id="btnSendMsg" className="btn btn-outline-secondary">
+              Send
+            </button>
+          </div>
         </div>
       </div>
     );
   }
 }
 
-render(<App />, window.document.getElementById("rx-app"));
+render(<ChatBox />, window.document.getElementById("rx-app"));
