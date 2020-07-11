@@ -1,17 +1,46 @@
 import React from "react";
 import { render } from "react-dom";
 import "../../styles/login-form.css";
+import { Input } from "./input.jsx";
 
 export class LoginForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: "",
+      password: "",
+    };
+
+    this.login = this.login.bind(this);
+    this.onUsernameChange = this.onUsernameChange.bind(this);
+    this.onPasswordChange = this.onPasswordChange.bind(this);
+  }
+
+  onUsernameChange(inputUsername) {
+    this.setState({ username: inputUsername });
+  }
+
+  onPasswordChange(inputPassword) {
+    this.setState({ password: inputPassword });
+  }
+
+  login() {
+    if (this.state.username.length === 0 || this.state.password.length === 0) {
+      alert("Please provide username and password!");
+      return;
+    }
+    alert(`yo! ${this.state.username}/${this.state.password} !`);
+  }
+
   render() {
     return (
       <div className="container bordered">
         <div className="login-form">
-          <Input placeholder="Username" />
-          <Input type="password" placeholder="Password" />
+          <Input placeholder="Username" onInputChange={this.onUsernameChange} />
+          <Input type="password" placeholder="Password" onInputChange={this.onPasswordChange} />
           <hr />
           <ServerConnection />
-          <button className="btn btn-primary" id="btnLogin">
+          <button className="btn btn-primary" id="btnLogin" onClick={this.login}>
             Login
           </button>
         </div>
@@ -32,16 +61,5 @@ function ServerConnection() {
         <Input id="serverPort" placeholder="Server Port" />
       </div>
     </div>
-  );
-}
-
-function Input(props) {
-  return (
-    <input
-      id={props.id}
-      className="form-control margin-bot-10px"
-      type={props.type ? props.type : "text"}
-      placeholder={props.placeholder}
-    ></input>
   );
 }
