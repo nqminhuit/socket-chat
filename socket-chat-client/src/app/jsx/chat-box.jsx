@@ -1,9 +1,8 @@
 import React from "react";
 import { render } from "react-dom";
 import "../../styles/chat-box.css";
-import "bootstrap/dist/css/bootstrap.min.css";
 
-class ChatBox extends React.Component {
+export class ChatBox extends React.Component {
   render() {
     return (
       <div id="chatbox" className="container">
@@ -23,4 +22,4 @@ class ChatBox extends React.Component {
   }
 }
 
-render(<ChatBox />, window.document.getElementById("rx-app"));
+render(<ChatBox />, window.document.querySelector("#rx-chat-box"));
