@@ -2,8 +2,7 @@
 
 buildClient() {
     cd socket-chat-client/
-    rm -rf socket-chat-client/dist/
-    npm run build
+    npm start
 }
 
 compileJava() {

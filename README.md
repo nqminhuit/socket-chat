@@ -10,10 +10,18 @@ $ bash build-and-run-socket-chat.sh
 
 ### Client setup
 
-Execute browser-sync:
+Execute webpack-dev-server
 
 ```bash
-cd socket-chat-client; browser-sync start --server --files **/*.html,**/*.css,**/*.js,**/*.json
+cd socket-chat-client
+node_modules/webpack-dev-server/bin/webpack-dev-server.js --content-base dist/ --inline --hot --watch-poll
+```
+
+compile jsx:
+
+```bash
+cd socket-chat-client
+node_modules/@babel/cli/bin/babel.js src/jsx/chat-box.jsx -o dist/chat-box.js --presets @babel/preset-react
 ```
 
 ### Server setup
@@ -67,6 +75,8 @@ notes:
     ```
 
 ## Upgrades
+
+For vanilla version, checkout the branch [original](https://github.com/nqminhuit/socket-chat/tree/original)
 
 There are some idea to upgrade this application:
 

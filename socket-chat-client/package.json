@@ -5,13 +5,28 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --config webpack.config.js"
+    "start": "npm run clean:build",
+    "clean:build": "rm -rf dist;webpack -d;cp src/index.html dist/index.html;cp -r src/styles/ dist/;cp -r asset/ dist/",
+    "build": "webpack -d;cp src/index.html dist/index.html;cp -r src/styles/ dist/;cp -r asset/ dist/",
+    "build:prod": "webpack -p; ...todo..."
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@babel/cli": "^7.10.4",
+    "@babel/core": "^7.10.4",
+    "@babel/preset-react": "^7.10.4",
+    "babel-loader": "^8.1.0",
+    "css-loader": "^3.6.0",
+    "style-loader": "^1.2.1",
     "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.12"
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "dependencies": {
+    "bootstrap": "^4.5.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   }
 }
