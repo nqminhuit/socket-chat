@@ -16,6 +16,9 @@ export class ChatBox extends React.Component {
   componentDidMount() {
     console.log("component did mount....");
     this.webSocket = new WebSocketHandler();
+    this.webSocket.addEventListener("message-received", event => {
+      window.document.querySelector("#msgArea").value += event.detail.message;
+    });
   }
 
   componentWillUnmount() {
@@ -23,9 +26,11 @@ export class ChatBox extends React.Component {
   }
 
   sendMessage(msg) {
-    console.log(msg);
-    console.log(this.state.webSocket);
-    this.webSocket.sendMessage(msg);
+    const procMsg = msg.trim();
+    if (procMsg.length === 0) {
+      return;
+    }
+    this.webSocket.sendMessage(`username: ${procMsg}`);
   }
 
   handleOnKeyPressInput(key) {
