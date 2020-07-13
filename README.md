@@ -76,6 +76,8 @@ notes:
 
 ## Upgrades
 
+For vanilla version, checkout the branch [original](https://github.com/nqminhuit/socket-chat/tree/original)
+
 There are some idea to upgrade this application:
 
 - [Tailwind](https://github.com/tailwindcss/tailwindcss) for CSS framework
