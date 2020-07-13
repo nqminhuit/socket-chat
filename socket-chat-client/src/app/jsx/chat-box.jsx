@@ -1,6 +1,7 @@
 import React from "react";
 import { Input } from "./input.jsx";
 import "../../styles/chat-box.css";
+import { WebSocketHandler } from "../handlers/websocket-handler.js";
 
 export class ChatBox extends React.Component {
   constructor() {
@@ -12,8 +13,19 @@ export class ChatBox extends React.Component {
     this.handleOnKeyPressInput = this.handleOnKeyPressInput.bind(this);
   }
 
+  componentDidMount() {
+    console.log("component did mount....");
+    this.webSocket = new WebSocketHandler();
+  }
+
+  componentWillUnmount() {
+    this.webSocket = null;
+  }
+
   sendMessage(msg) {
     console.log(msg);
+    console.log(this.state.webSocket);
+    this.webSocket.sendMessage(msg);
   }
 
   handleOnKeyPressInput(key) {
