@@ -4,7 +4,7 @@ let SRC_DIR = path.resolve(__dirname, "src");
 let DST_DIR = path.resolve(__dirname, "dist");
 
 module.exports = {
-  entry: `${SRC_DIR}/app/jsx/main.jsx`,
+  entry: `${SRC_DIR}/app/elements/main.jsx`,
   output: {
     filename: "main.js",
     path: DST_DIR,
