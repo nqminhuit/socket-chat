@@ -30,7 +30,7 @@ export class ChatBox extends React.Component {
     if (procMsg.length === 0) {
       return;
     }
-    this.webSocket.sendMessage(`username: ${procMsg}`);
+    this.webSocket.sendMessage(`${this.props.username}: ${procMsg}`);
   }
 
   handleOnKeyPressInput(key) {

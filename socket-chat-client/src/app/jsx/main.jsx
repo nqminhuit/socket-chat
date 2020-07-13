@@ -9,22 +9,24 @@ class App extends React.Component {
     super(props);
     this.state = {
       loginSuccess: false,
+      username: "",
     };
 
     this.handleLogin = this.handleLogin.bind(this);
   }
 
-  handleLogin(success) {
+  handleLogin(success, usernameInfo) {
     if (success) {
-      alert("login success!");
-    } else {
-      alert("FAILED!!!!!!!!!!!!!!!!!!");
+      this.setState({ loginSuccess: success, username: usernameInfo });
     }
-    this.setState({ loginSuccess: success });
   }
 
   render() {
-    return !this.state.loginSuccess ? <LoginForm handleLogin={this.handleLogin} /> : <ChatBox />;
+    return !this.state.loginSuccess ? (
+      <LoginForm handleLogin={this.handleLogin} />
+    ) : (
+      <ChatBox username={this.state.username} />
+    );
   }
 }
 

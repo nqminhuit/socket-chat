@@ -29,7 +29,7 @@ export class LoginForm extends React.Component {
       this.props.handleLogin(false);
       return;
     }
-    this.props.handleLogin(true);
+    this.props.handleLogin(true, this.state.username);
   }
 
   render() {
