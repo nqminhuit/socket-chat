@@ -1,9 +1,21 @@
 ## Demo
 
-To run the application, execute:
-
+- Download and untar Kafka
+- Start the `zookeeper`:
 ```bash
-$ bash build-and-run-socket-chat.sh
+./zookeeper-server-start.sh ../config/zookeeper.properties
+```
+- Start Kafka server:
+```bash
+./kafka-server-start.sh ../config/server.properties
+```
+- Create Kafka topic:
+```bash
+kafka-topics --create --topic kafka-chat --zookeeper localhost:2181 --replication-factor 1 --partitions 1
+```
+- Build and run the application:
+```bash
+./gradlew run
 ```
 
 ## For development
@@ -26,29 +38,26 @@ node_modules/@babel/cli/bin/babel.js src/jsx/chat-box.jsx -o dist/chat-box.js --
 
 ### Server setup
 
-Compile and start server:
+Compile:
 
 ```bash
-rm -rf socket-chat-server/build/classes/*;\
-javac socket-chat-server/src/main/java/utility/*.java -d socket-chat-server/build/classes/;\
-javac -cp socket-chat-server/build/classes/ socket-chat-server/src/main/java/observer/*.java -d socket-chat-server/build/classes/;\
-javac -cp socket-chat-server/build/classes/ socket-chat-server/src/main/java/websocket/*.java -d socket-chat-server/build/classes/;\
-javac -cp socket-chat-server/build/classes/ socket-chat-server/src/main/java/*.java -d socket-chat-server/build/classes/;\
-java -cp socket-chat-server/build/classes/ WebSocketApp
+./gradlew clean assemble
 ```
 
-#### Or:
-
-Create an executable jar:
+Start server:
 
 ```bash
-jar cvfm socket-chat-server/build/socket-chat-server.jar socket-chat-server/manifest -C socket-chat-server/build/classes/ .
+java -jar socket-chat-server/build/libs/socket-chat-server.jar
 ```
 
-Execute:
-
+### Sending message
 ```bash
-java -jar socket-chat-server/build/socket-chat-server.jar
+curl -X POST http://localhost:8080/api/send -H 'Content-Type:application/json' -d 'Hello world!'
+```
+
+### Checking message in the topic
+```bash
+./kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic socket-chat
 ```
 
 ## References
@@ -59,6 +68,7 @@ java -jar socket-chat-server/build/socket-chat-server.jar
 - https://www.codejava.net/java-se/networking/java-socket-server-examples-tcp-ip
 - https://javascript.info/websocket
 - https://docs.oracle.com/javase/tutorial/networking/sockets/index.html
+- https://dev.to/subhransu/realtime-chat-app-using-kafka-springboot-reactjs-and-websockets-lc
 
 notes:
 
@@ -73,13 +83,3 @@ notes:
     $ javac -cp socket-chat-server/build/classes/ socket-chat-server/src/main/java/websocket/WebSocket.java  -d socket-chat-server/build/classes/
     $ jar uf socket-chat-server/build/socket-chat-server.jar -C socket-chat-server/build/classes/ websocket/WebSocket.class
     ```
-
-## Upgrades
-
-For vanilla version, checkout the branch [original](https://github.com/nqminhuit/socket-chat/tree/original)
-
-There are some idea to upgrade this application:
-
-- [Tailwind](https://github.com/tailwindcss/tailwindcss) for CSS framework
-- Use [Java API for WebSocket](https://docs.oracle.com/javaee/7/tutorial/websocket.htm)
-- Use ReactJs or Angular for the client
