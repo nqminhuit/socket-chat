@@ -19,7 +19,7 @@ dependencies {
 }
 
 application {
-    mainClassName = 'WebSocketApp'
+    mainClassName = 'kafka.KafkaChatApp'
 }
 
 test {
